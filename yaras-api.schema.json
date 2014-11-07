@@ -1,0 +1,150 @@
+{
+    "title": "YARAS Schema",
+    "description": "This is a schema that matches a YARAS API.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "oneOf": [
+        {
+            "$ref": "#/definitions/apis/get-request"
+        },
+        {
+            "comment": "Other api definitions could/should be included... "
+        }
+    ],
+
+    "definitions": {
+        "apis": {
+            "get-request": {
+                "$ref": "#/definitions/standardResponseStructure"
+            }
+        },
+        "standardResponseStructure": {
+            "type": "object",
+            "properties": {
+                "_links": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/links"
+                        },
+                        {
+                            "properties": {
+                                "items": {
+                                    "$ref": "#/definitions/nodeLinkMetadataOneOrMore"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "_metadata": {
+                    "type": "object",
+                    "properties": {
+                        "data-schema-uri": {
+                            "type": "string",
+                            "pattern": "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
+                        },
+                        "organization": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "number"
+                        },
+                        "uid": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["status", "data-schema-uri"]
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "required": ["id"],
+                        "additionalProperties": true
+                    }
+                }
+            },
+            "links": {
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "$ref": "#/definitions/linkMetadata"
+                    }
+                },
+                "additionalProperties": {
+                    "$ref": "#/definitions/linkMetadataOneOrMore"
+                },
+                "required": ["self"]
+            },
+            "linkMetadata": {
+                "type": "object",
+                "description": "Only href, templated, title and media are allowed.  HREF must be a uri. Other values must not be empty.",
+                "title": "link",
+                "properties": {
+                    "href": {
+                        "type": "string",
+                        "pattern": "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
+                    },
+                    "templated": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "type": "string",
+                        "pattern": ".+"
+                    },
+                    "media": {
+                        "type": "string"
+                    }
+                },
+                "required": ["href"],
+                "additionalProperties": false
+            },
+            "nodeLinkMetadata": {
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/linkMetadata"
+                    },
+                    {
+                        "description": "For node links 'media' must be either LEAF or TREE.  Title must be present.",
+                        "title": "Node Link",
+                        "properties": {
+                            "media": {
+                                "enum": [ "LEAF", "TREE"]
+                            }
+                        },
+                        "required": ["media", "title"]
+                    }
+                ]
+            },
+            "nodeLinkMetadataOneOrMore": {
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/nodeLinkMetadata"
+                        },
+                        "uniqueItems": true
+                    },
+                    {
+                        "$ref": "#/definitions/nodeLinkMetadata"
+                    }
+                ]
+            },
+            "linkMetadataOneOrMore": {
+                "oneOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/linkMetadata"
+                        },
+                        "minItems": 2,
+                        "uniqueItems": true
+                    },
+                    {
+                        "$ref": "#/definitions/linkMetadata"
+                    }
+                ]
+            }
+        }
+    }
+}
