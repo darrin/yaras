@@ -1042,3 +1042,36 @@ In no particular order.
 * [Swagger](https://helloreverb.com/developers/swagger)
 * [Swagger Spring Annotations](https://github.com/martypitt/swagger-springmvc).
 * [HAL](http://tools.ietf.org/html/draft-kelly-json-hal)
+
+
+
+# Appendix
+  YARAS provides standards, guidelines and conventions for writing a RESTful API and is intended to encourage consistency, maintainability, and consistent use of best practices.
+
+## Build
+
+I use doctoc (and grunt-doctoc) to keep the table of contents up to date.
+
+To run that:
+
+	npm install
+	grunt
+
+## Create a PDF version
+
+For those that want to have this as a PDF:
+
+	npm install
+	grunt pdf
+
+This will create restful-standards.pdf
+
+## Create an HTML version
+
+iFor those that want to have this as a HTML:
+
+        npm install
+        grunt html
+
+This will create an html version in /html. 
+
