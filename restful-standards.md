@@ -237,7 +237,7 @@ At the top level every HATEAOS response looks like this (though \_embedded is op
 
 The data for every resource falls within the data element. As an API designer this where the resource model is populated and is the meat of what you'll be defining. If there is a single resource the data object represents that resource.  If there is more than one resource data may be an array or map of resources.
 
-Generally follow [Google JSON Style Guide](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml) when building out JSON objects. This is because tools will tend to follow these guides.
+Generally follow [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml) when building out JSON objects. This is because tools will tend to follow these guides.
 
 Required Fields:
 
